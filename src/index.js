@@ -3,6 +3,19 @@ let app = express();
 let personRoute = require("./routes/person");
 let path = require("path");
 
+const config = require("./config");
+const mongoose = require("mongoose");
+
+mongoose.connect(config.db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  console.log("DB connected");
+});
+
 app.use((req, res, next) => {
   console.log(`${new Date().toString()} -> ${req.originalUrl}`);
   next();
