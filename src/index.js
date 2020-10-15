@@ -4,6 +4,7 @@ let app = express();
 //allow using path (__dirname), load a body to request (req.body)
 let path = require("path");
 let bodyParser = require("body-parser");
+app.use(bodyParser.json());
 
 //load mongoose - connect to atlas mongoDB - inside a config file
 const config = require("./config");
@@ -17,6 +18,7 @@ mongoose.connect(config.db, {
   useCreateIndex: true, //solving deprecation worning
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -24,7 +26,6 @@ db.once("open", function () {
   console.log("DB connected");
 });
 //actual use of bodyParser
-app.use(bodyParser.json());
 
 //printout of request - log time and messege from endpoints
 app.use((req, res, next) => {

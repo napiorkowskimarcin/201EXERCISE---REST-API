@@ -2,7 +2,7 @@ let mongoose = require("mongoose");
 
 let CustomerSchema = new mongoose.Schema({
   name: { type: String },
-  email: { type: String, require: true, unique: true },
+  email: { type: String, required: true, unique: true },
 });
 
 module.exports = mongoose.model("Customer", CustomerSchema);
